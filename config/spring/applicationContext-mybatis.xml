@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+    <!-- 构建sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 配置数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 读取mybatis全局配置文件 -->
+        <property name="configLocation" value="classpath:mybatis/mybatis-cfg.xml"/>
+        <!-- 引入映射文件 -->
+        <property name="mapperLocations" value="classpath:mybatis/mappers/**/*.xml"/>
+        <!-- 配置别名扫描 -->
+        <property name="typeAliasesPackage" value="com.atguigu.pojo"/>
+    </bean>
+
+    <!-- 初始化mapper接口 -->
+    <!--<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+        <!--<property name="mapperInterface" value="com.atguigu.mapper.UserMapper"/>-->
+        <!--<property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
+    <!--</bean>-->
+
+    <!-- mapper接口初始化扫描 -->
+    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+        <!--<property name="basePackage" value="com.atguigu.mapper"/>-->
+        <!--&lt;!&ndash; 有多个需指定sqlSessionFactory，只有一个会自动匹配，可省略 &ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>&ndash;&gt;-->
+    <!--</bean>-->
+
+    <mybatis-spring:scan base-package="com.atguigu.mapper"/>
+</beans>
